@@ -1,4 +1,3 @@
-from typing import Union, List, Dict
 from functools import lru_cache
 from src.insights.jobs import read
 
@@ -43,21 +42,13 @@ def matches_salary_range(job, salary):
     return int(job["min_salary"]) <= int(salary) <= int(job["max_salary"])
 
 
-def filter_by_salary_range(
-    jobs: List[dict], salary: Union[str, int]
-) -> List[Dict]:
-    """Filters a list of jobs by salary range
+def filter_by_salary_range(jobs, salary):
+    filter_salary = []
+    for job in jobs:
+        try:
+            if matches_salary_range(job, salary):
+                filter_salary.append(job)
+        except ValueError as err:
+            print(err)
 
-    Parameters
-    ----------
-    jobs : list
-        The jobs to be filtered
-    salary : int
-        The salary to be used as filter
-
-    Returns
-    -------
-    list
-        Jobs whose salary range contains `salary`
-    """
-    raise NotImplementedError
+    return filter_salary
