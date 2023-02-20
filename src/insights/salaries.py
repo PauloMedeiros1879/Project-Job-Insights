@@ -15,22 +15,15 @@ def get_max_salary(path):
     )
 
 
-def get_min_salary(path: str) -> int:
-    """Get the minimum salary of all jobs
-
-    Must call `read`
-
-    Parameters
-    ----------
-    path : str
-        Must be passed to `read`
-
-    Returns
-    -------
-    int
-        The minimum salary paid out of all job opportunities
-    """
-    raise NotImplementedError
+def get_min_salary(path):
+    job_read = read(path)
+    return min(
+        [
+            int(salary["min_salary"])
+            for salary in job_read
+            if salary["min_salary"].isdigit()
+        ]
+    )
 
 
 def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
